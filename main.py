@@ -46,3 +46,12 @@ async def create_user(user: User):
     item_dict.update({"full_name": user.first_name + " " + user.last_name})
     fake_users_db.append(item_dict)
     return item_dict
+
+
+@app.put('/users/{user_id}')
+async def update_user(user: User, user_id: int, q: str = None):
+    result = {"id": user_id, **user.dict()}
+    # no partial - must pass all
+    if q:
+        result.update({"q": q})
+    return result
