@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Query, Path, Body
 from pydantic import BaseModel, EmailStr
+from starlette.responses import Response
+from starlette.status import HTTP_404_NOT_FOUND
 
 
 class User(BaseModel):
@@ -50,7 +52,7 @@ async def read_users(skip: int = 0, limit: int = 10):
     return result
 
 
-@app.post('/users/')
+@app.post('/users/', status_code=201)
 async def create_user(user: User):
     item_dict = user.dict()
     new_id = max([i['user_id'] for i in fake_users_db]) + 1
@@ -76,9 +78,12 @@ async def update_user(
             }
         ),
         user_id: int,
+        response: Response,
         q: str = Query(None, max_length=50, min_length=3)
 ):
-    result = {"id": user_id}
+    result = get_user(user_id)
+    if not result:
+        response.status_code = HTTP_404_NOT_FOUND
     if user:
         result.update(**user.dict(exclude_unset=True))
     if q:
