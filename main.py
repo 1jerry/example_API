@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Query, Path
-from pydantic import BaseModel
+from fastapi import FastAPI, Query, Path, Body
+from pydantic import BaseModel, EmailStr
 
 
 class User(BaseModel):
@@ -7,7 +7,12 @@ class User(BaseModel):
     last_name: str
     zip: int = None
     phone: int = None
-    email: str = None
+    email: EmailStr = None
+
+
+class User_update(User):
+    first_name: str = None
+    last_name: str = None
 
 
 app = FastAPI()
@@ -34,7 +39,8 @@ async def read_users_me():
 
 
 @app.get("/users/{user_id}")
-async def read_user(user_id: int = Path(..., title="The user's ID", ge=1)):
+async def read_user(user_id: int = Path(..., title="The ID of the user you want to get.", ge=1, le=1000)):
+    # in Path(), None is optional, ... is required
     return get_user(user_id)
 
 
@@ -57,9 +63,24 @@ async def create_user(user: User):
 
 
 @app.put('/users/{user_id}')
-async def update_user(user: User, user_id: int, q: str = Query(None, max_length=50, min_length=3)):
-    result = {"id": user_id, **user.dict()}
-    # no partial - must pass all
+async def update_user(
+        *,
+        user: User_update = Body(
+            None,
+            example={
+                "first_name": "bob",
+                "last_name": "Peterson",
+                "zip": 98665,
+                "phone": 8005551212,
+                "email": "bad@a.com"
+            }
+        ),
+        user_id: int,
+        q: str = Query(None, max_length=50, min_length=3)
+):
+    result = {"id": user_id}
+    if user:
+        result.update(**user.dict(exclude_unset=True))
     if q:
         result.update({"q": q})
     return result
