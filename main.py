@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query, Path, Body
 from pydantic import BaseModel, EmailStr
 from starlette.responses import Response
 from starlette.status import HTTP_404_NOT_FOUND
+from starlette_prometheus import metrics, PrometheusMiddleware
 
 
 class User(BaseModel):
@@ -18,6 +19,8 @@ class User_update(User):
 
 
 app = FastAPI()
+app.add_middleware(PrometheusMiddleware)
+app.add_route('/metrics/', metrics)
 
 fake_users_db = [
     {"user_id": 1, "first_name": "bob"},
