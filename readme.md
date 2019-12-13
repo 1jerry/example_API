@@ -22,5 +22,5 @@
 ## run locally
 - using pipenv
   - pipenv install
-  - pipenv run uvicorn main:app --reload --loop asyncio
+  - pipenv run uvicorn main:app 
   - access at http://localhost:8000
