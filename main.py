@@ -3,6 +3,7 @@ from pydantic import BaseModel, EmailStr
 from starlette.responses import Response
 from starlette.status import HTTP_404_NOT_FOUND
 from starlette_prometheus import metrics, PrometheusMiddleware
+from starlette.responses import HTMLResponse
 
 
 class User(BaseModel):
@@ -13,7 +14,7 @@ class User(BaseModel):
     email: EmailStr = None
 
 
-class User_update(User):
+class UserUpdate(User):
     first_name: str = None
     last_name: str = None
 
@@ -33,9 +34,18 @@ def get_user(rid):
     return next((o for o in fake_users_db if o["user_id"] == rid), {})
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {"message": "Hello World...."}
+    return """
+    <html>
+    <head><title>Example API</title></head>
+    <body>
+    <h2>Example API using Python and asynchronous, static typed library <i>FastAPI</i></h2>
+    <p>Primary API is at <a href="users">users</a></p>
+    <p>See <a href="redoc">documentation</a></p>
+    </body>
+    </html>
+    """
 
 
 @app.get("/users/me")
@@ -70,7 +80,7 @@ async def create_user(user: User):
 @app.put('/users/{user_id}')
 async def update_user(
         *,
-        user: User_update = Body(
+        user: UserUpdate = Body(
             None,
             example={
                 "first_name": "bob",

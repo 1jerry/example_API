@@ -9,7 +9,7 @@
 * [X] Add Metrics (such as dropwizard, codahale, or prometheus to time routes)
   * Prometheus raw metrics at /metrics/
 * [ ] Write unit tests for the service.
-* [ ] Generate a code coverage report (for Java you can use the jacoco-maven-plugin for unit test coverage).
+* [ ] Generate a code coverage report.
 * [X] The user JSON can just be id, first name, last name, zip code, and email address.
   * see /users
 ## run public service
