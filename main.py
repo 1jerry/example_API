@@ -30,8 +30,11 @@ fake_users_db = [
 ]
 
 
-def get_user(rid):
-    return next((o for o in fake_users_db if o["user_id"] == rid), {})
+def get_user(rid, response=None):
+    result = next((o for o in fake_users_db if o["user_id"] == rid), {})
+    if response and not result:
+        response.status_code = HTTP_404_NOT_FOUND
+    return result
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -49,14 +52,17 @@ async def root():
 
 
 @app.get("/users/me")
-async def read_users_me():
-    return get_user(1)
+async def read_users_me(response: Response):
+    return get_user(1, response)
 
 
 @app.get("/users/{user_id}")
-async def read_user(user_id: int = Path(..., title="The ID of the user you want to get.", ge=1, le=1000)):
-    # in Path(), None is optional, ... is required
-    return get_user(user_id)
+async def read_user(
+        response: Response,
+        user_id: int = Path(..., title="The ID of the user you want to get.", ge=1, le=1000)
+):
+    # in Path(), None signifies optional, ... signifies required
+    return get_user(user_id, response)
 
 
 @app.get("/users/")
@@ -94,9 +100,7 @@ async def update_user(
         response: Response,
         q: str = Query(None, max_length=50, min_length=3)
 ):
-    result = get_user(user_id)
-    if not result:
-        response.status_code = HTTP_404_NOT_FOUND
+    result = get_user(user_id, response)
     if user:
         result.update(**user.dict(exclude_unset=True))
     if q:

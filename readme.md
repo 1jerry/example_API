@@ -8,7 +8,8 @@
 * [ ] Use structured logging
 * [X] Add Metrics (such as dropwizard, codahale, or prometheus to time routes)
   * Prometheus raw metrics at /metrics/
-* [ ] Write unit tests for the service.
+* [X] Write unit tests for the service.
+  * run with ```pytest```  (not complete yet)
 * [ ] Generate a code coverage report.
 * [X] The user JSON can just be id, first name, last name, zip code, and email address.
   * see /users
