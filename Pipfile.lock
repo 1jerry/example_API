@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "32cafe235b6c569027e4149adf5e40461de9cc82617161bd9a2927f3b2d2723c"
+            "sha256": "c71a9a1bad19f028734afc85bf9544544a233d0793f3c91aca2aa37a4d6fb4b8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -36,6 +36,19 @@
                 "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
             ],
             "version": "==7.0"
+        },
+        "dnspython": {
+            "hashes": [
+                "sha256:36c5e8e38d4369a08b6780b7f27d790a292b2b08eea01607865bf0936c558e01",
+                "sha256:f69c21288a962f4da86e56c4905b49d11aba7938d3d740e80d9e366ee4f1632d"
+            ],
+            "version": "==1.16.0"
+        },
+        "email-validator": {
+            "hashes": [
+                "sha256:e3e6ede1765d7c1e580d2050d834b2689361f7da2d50ce74df6a5968fca7cb13"
+            ],
+            "version": "==1.0.5"
         },
         "fastapi": {
             "hashes": [
@@ -102,12 +115,14 @@
         },
         "prometheus-client": {
             "hashes": [
-                "sha256:71cd24a2b3eb335cb800c7159f423df1bd4dcd5171b234be15e3f31ec9f622da",
-                "sha256:76a3fe4bf22524fdcbdb69ded523db6755f1599d452e27d17e5d6c2e3631040f"
+                "sha256:71cd24a2b3eb335cb800c7159f423df1bd4dcd5171b234be15e3f31ec9f622da"
             ],
             "version": "==0.7.1"
         },
         "pydantic": {
+            "extras": [
+                "email"
+            ],
             "hashes": [
                 "sha256:1c2df10aca600a23e7310df7ee62bc8024e4bfc6a444bc4d38c7b095b0cc8f79",
                 "sha256:29669232b21a0fe45ada7c183198129af8447e12d0b6e727098ce57c3c8df320",
@@ -124,6 +139,7 @@
                 "sha256:de0624545e13a5eb09ab4fbd7076e4beced5aff2cd56097264c5f740f4b5fd39",
                 "sha256:fb6a5ddf762c594e6038af30fd3dc843f1238d60b5d477734fbc4b24cc1b87b9"
             ],
+            "index": "pypi",
             "version": "==1.2"
         },
         "python-multipart": {

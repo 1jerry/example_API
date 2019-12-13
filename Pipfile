@@ -12,6 +12,7 @@ python-multipart = "*"
 fastapi = "*"
 uvicorn = "*"
 starlette-prometheus = "*"
+pydantic = {extras = ["email"],version = "*"}
 
 [requires]
 python_version = "3.7"
