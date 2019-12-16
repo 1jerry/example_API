@@ -10,7 +10,8 @@
   * Prometheus raw metrics at /metrics/
 * [X] Write unit tests for the service.
   * run with ```pytest```  (not complete yet)
-* [ ] Generate a code coverage report.
+* [X] Generate a code coverage report.
+  * run with ```pytest --cov=main .```
 * [X] The user JSON can just be id, first name, last name, zip code, and email address.
   * see /users
 ## run public service

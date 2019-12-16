@@ -48,7 +48,7 @@ def test_read_all():
 def test_delete():
     response = client.delete('/users/1')
     assert response.status_code == 200
-    assert response.json() == dict()
+    assert response.json() != dict()
 
 
 def test_create_item():

@@ -65,6 +65,20 @@ async def read_user(
     return get_user(user_id, response)
 
 
+@app.delete("/users/{user_id}")
+async def read_user(
+        response: Response,
+        user_id: int = Path(..., title="The ID of the user you want to DELETE.", ge=1, le=1000)
+):
+    result = get_user(user_id, response)
+    if result:
+        try:
+            fake_users_db.remove(result)
+        except ValueError:
+            result = {}
+    return result
+
+
 @app.get("/users/")
 async def read_users(skip: int = 0, limit: int = 10):
     result = fake_users_db[skip:skip + limit]
